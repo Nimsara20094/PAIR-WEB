@@ -1,25 +1,196 @@
-{
-    "description": "qr",
-    "main": "./index.js",
-  "engines" : { 
-    "npm" : ">=9.7.2",
-    "node" : ">=20.0.0"
-    },
-    "scripts": {
-    "start": "node Maher-Zubair.js"
-  },
-  "author": "Maher-Zubair",
-  "license": "GPL-3.0 license",
-  "dependencies": {
-    "@whiskeysockets/baileys": "^6.5.0",
-    "maher-zubair-baileys": "^6.6.5",
-    "qrcode": "^1.5.3",
-    "awesome-phonenumber": "^2.64.0",
-    "pino": "^8.1.0",
-    "phone" : "3.1.30",
-    "body-parser": "^1.20.1",
-    "pastebin-js": "^1.0.6",
-    "express": "^4.18.1",
-    "path": "^0.12.7"
-   }
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Salon Beauty Bliss</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #e8f5e9;
+    }
+    header {
+      background-color: #2e7d32;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    nav {
+      background-color: #a5d6a7;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #1b5e20;
+      font-weight: bold;
+    }
+    .hero {
+      background-image: url('https://images.unsplash.com/photo-1557682224-5b8590cd9ec5');
+      background-size: cover;
+      background-position: center;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 2px 2px 8px #000;
+      font-size: 2rem;
+      text-align: center;
+      padding: 1rem;
+    }
+    .section {
+      padding: 2rem;
+      text-align: center;
+    }
+    .btn {
+      background-color: #43a047;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #2e7d32;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    #whatsapp {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 24px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    footer {
+      background-color: #a5d6a7;
+      color: #1b5e20;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Salon Beauty Bliss</h1>
+    <p>Where your beauty shines!</p>
+  </header>
+
+  <nav>
+    <a href="#services">Services</a>
+    <a href="#gallery">Haircuts</a>
+    <a href="#booking">Booking</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <h2>Feel Beautiful, Be Beautiful</h2>
+      <button class="btn" onclick="scrollToBooking()">Book Now</button>
+    </div>
+  </section>
+
+  <section class="section" id="services">
+    <h2>Our Services</h2>
+    <p>Haircuts, Facials, Manicure, Pedicure, Bridal Makeup and more...</p>
+  </section>
+
+  <section class="section" id="gallery">
+    <h2>Haircut Styles Gallery</h2>
+
+    <div id="uploadArea" style="display: none;">
+      <input type="file" accept="image/*" multiple onchange="previewImages(event)" class="btn"/>
+      <p>You are logged in as admin.</p>
+    </div>
+
+    <div id="loginArea">
+      <p>Admin Only: Enter password to upload haircut photos</p>
+      <input type="password" id="adminPass" placeholder="Enter admin password" />
+      <button class="btn" onclick="checkPassword()">Login</button>
+    </div>
+
+    <div class="gallery" id="imagePreview"></div>
+  </section>
+
+  <section class="section" id="booking">
+    <h2>Book an Appointment</h2>
+    <button class="btn" onclick="bookNow()">Click to Book</button>
+  </section>
+
+  <section class="section" id="contact">
+    <h2>Contact Us</h2>
+    <p>Call: 077-1234567 | Instagram: @beautybliss_salon</p>
+  </section>
+
+  <footer>
+    &copy; 2025 Salon Beauty Bliss. All rights reserved.<br>
+    Powered by <strong>NIMA</strong> | <span>2025</span>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a id="whatsapp" href="https://wa.me/94771234567" target="_blank" title="Chat on WhatsApp">
+    &#x1F4AC;
+  </a>
+
+  <script>
+    function scrollToBooking() {
+      document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function bookNow() {
+      alert('Thank you! Our team will contact you shortly.');
+    }
+
+    function checkPassword() {
+      const password = document.getElementById('adminPass').value;
+      const correct = "salon2025"; // change this if needed
+
+      if(password === correct) {
+        document.getElementById('uploadArea').style.display = 'block';
+        document.getElementById('loginArea').style.display = 'none';
+      } else {
+        alert("Incorrect password!");
+      }
+    }
+
+    function previewImages(event) {
+      const preview = document.getElementById('imagePreview');
+      preview.innerHTML = '';
+      const files = event.target.files;
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          preview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  </script>
+
+</body>
+</html>
